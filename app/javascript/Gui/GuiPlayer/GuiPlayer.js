@@ -171,13 +171,16 @@ GuiPlayer.startPlayback = function(TranscodeAlg, resumeTicksSamsung) {
 
 	var url = this.playingURL + '&PlaySessionId=' + this.PlaySessionId;
 	
+	// DEPRECATED: StartTimeTicks is not supported by Jellyfin >= 10.7.x
 	//Update URL with resumeticks
-	url += '&StartTimeTicks=' + (resumeTicksSamsung*10000);
+	//url += '&StartTimeTicks=' + (resumeTicksSamsung*10000);
 
+	/* DEPRECATED: Disabled HLS component as subtitles don't work properly
 	//Required for HLS streaming
 	if (this.PlayMethod != "DirectPlay") {
 		url += '|COMPONENT=HLS';
 	}
+	*/
 
 	//Update Server content is playing * update time
 	Server.videoStarted(this.PlayerData.Id,this.playingMediaSource.Id,this.PlayMethod,this.PlaySessionId);
@@ -867,13 +870,16 @@ GuiPlayer.newPlaybackPosition = function(startPositionTicks) {
 
 	var url = this.playingURL + '&PlaySessionId=' + this.PlaySessionId;
 
+	// DEPRECATED: StartTimeTicks is not supported by Jellyfin >= 10.7.x
 	//Update URL with startPositionTicks
-	url += '&StartTimeTicks=' + (Math.round(startPositionTicks));
+	//url += '&StartTimeTicks=' + (Math.round(startPositionTicks));
 
+	/* DEPRECATED: Disabled HLS component as subtitles don't work properly
 	//Required for HLS streaming
 	if (this.PlayMethod != "DirectPlay") {
 		url += '|COMPONENT=HLS';
 	}
+	*/
 
 	var position = Math.round(startPositionTicks / 10000000);
     this.plugin.ResumePlay(url,position);
