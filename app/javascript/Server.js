@@ -51,7 +51,7 @@ Server.setDevice = function(Device) {
 	this.Device = Device;
 }
 
-//Used in Settings 
+//Used in Settings
 Server.getDevice = function() {
 	return this.Device;
 }
@@ -72,7 +72,7 @@ Server.getCustomURL = function(SortParams) {
 		return  Server.getServerAddr() + SortParams;
 	} else {
 		return  Server.getServerAddr();
-	}	
+	}
 }
 
 Server.getItemTypeURL = function(SortParams) {
@@ -80,11 +80,11 @@ Server.getItemTypeURL = function(SortParams) {
 		return  Server.getServerAddr() + "/Users/" + Server.getUserID() + "/Items?format=json" + SortParams;
 	} else {
 		return  Server.getServerAddr() + "/Users/" + Server.getUserID() + "/Items?format=json";
-	}	
+	}
 }
 
 Server.getThemeMedia = function(ItemID) {
-	return  Server.getServerAddr() + "/Items/" + ItemID + "/ThemeMedia?UserId=" + Server.getUserID() + "&InheritFromParent=true&format=json"	
+	return  Server.getServerAddr() + "/Items/" + ItemID + "/ThemeMedia?UserId=" + Server.getUserID() + "&InheritFromParent=true&format=json"
 }
 
 Server.getChildItemsURL = function(ParentID, SortParams) {
@@ -92,7 +92,7 @@ Server.getChildItemsURL = function(ParentID, SortParams) {
 		return  Server.getServerAddr() + "/Users/" + Server.getUserID() + "/Items?ParentId="+ParentID+"&format=json" + SortParams;
 	} else {
 		return  Server.getServerAddr() + "/Users/" + Server.getUserID() + "/Items?ParentId="+ParentID+"&format=json";
-	}	
+	}
 }
 
 Server.getPlaybackInfoURL = function(itemId) {
@@ -109,7 +109,7 @@ Server.getItemInfoURL = function(ParentID, SortParams) {
 		return  Server.getServerAddr() + "/Users/" + Server.getUserID() + "/Items/"+ParentID+"?format=json" + SortParams;
 	} else {
 		return  Server.getServerAddr() + "/Users/" + Server.getUserID() + "/Items/"+ParentID+"?format=json";
-	}		
+	}
 }
 
 Server.getItemIntrosUrl = function(itemId, SortParams) {
@@ -147,7 +147,7 @@ Server.getImageURL = function(itemId,imagetype,maxwidth,maxheight,unplayedcount,
 		break;
 	case "Thumb":
 		query = "/Items/"+ itemId +"/Images/Thumb/0?maxwidth="+maxwidth+"&maxheight="+maxheight + "&quality=90";
-		break;	
+		break;
 	case "Logo":
 		query = "/Items/"+ itemId +"/Images/Logo/0?maxwidth="+maxwidth+"&maxheight="+maxheight + "&quality=90";
 		break;
@@ -161,10 +161,10 @@ Server.getImageURL = function(itemId,imagetype,maxwidth,maxheight,unplayedcount,
 		query = "/Items/" + itemId + "/Images/Chapter/" + chapter + "?maxwidth="+maxwidth+"&maxheight="+maxheight + "&quality=90";
 		break;
 	}
-	
+
 	if (Main.isImageCaching()) {
 			var found = false;
-			
+
 			for (var i = 0; i <Support.imageCachejson.Images.length; i++) {
 				//Is image in cache - If so use it
 				if (Support.imageCachejson.Images[i].URL == query) {
@@ -174,9 +174,9 @@ Server.getImageURL = function(itemId,imagetype,maxwidth,maxheight,unplayedcount,
 			}
 
 			if (found == true) {
-				//Use data URI from file			
+				//Use data URI from file
 				return Support.imageCachejson.Images[i].DataURI;
-			} else {			
+			} else {
 				//Use URL & Add to Cache
 				var full = Server.getServerAddr() +  query;
 
@@ -191,8 +191,8 @@ Server.getImageURL = function(itemId,imagetype,maxwidth,maxheight,unplayedcount,
 				  }
 				};
 				xhr.send();
-				
-				
+
+
 				return full;
 			}
 	} else {
@@ -208,52 +208,67 @@ Server.getScreenSaverImageURL = function(itemId,imagetype,maxwidth,maxheight) {
 			break;
 		case "Primary":
 			query =   Server.getServerAddr() + "/Items/"+ itemId +"/Images/Primary/0?quality=90&maxwidth="+maxwidth+"&maxheight="+maxheight;
-			break;	
-	}	
+			break;
+	}
 	return query;
 }
 
 Server.getBackgroundImageURL = function(itemId,imagetype,maxwidth,maxheight,unplayedcount,played,playedpercentage,totalbackdrops) {
 	var query = "";
 	var index =  Math.floor((Math.random()*totalbackdrops)+0);
-	
+
 	switch (imagetype) {
-	
+
 	case "Backdrop":
 		query =   Server.getServerAddr() + "/Items/"+ itemId +"/Images/Backdrop/"+index+"?maxwidth="+maxwidth+"&maxheight="+maxheight;
 		break;
 	}
-	
+
 	query = query + "&Quality=90";
-	
+
 	return query;
 }
 
 Server.getStreamUrl = function(itemId,mediaSourceId){
-	var streamparams = '/master.m3u8?VideoCodec=h264&Profile=high&Level=41&MaxVideoBitDepth=8&MaxWidth=1920&VideoBitrate=10000000&AudioCodec=aac&audioBitrate=360000&TranscodingMaxAudioChannels=6&MediaSourceId='+mediaSourceId + '&api_key=' + Server.getAuthToken();	
+	var streamparams = '/master.m3u8?VideoCodec=h264&Profile=high&Level=41&MaxVideoBitDepth=8&MaxWidth=1920&VideoBitrate=10000000&AudioCodec=aac&audioBitrate=360000&TranscodingMaxAudioChannels=6&MediaSourceId='+mediaSourceId + '&api_key=' + Server.getAuthToken();
 	var streamUrl = Server.getServerAddr() + '/Videos/' + itemId + streamparams + '&DeviceId='+Server.getDeviceID();
 	return streamUrl;
 }
 
 
-Server.setRequestHeaders = function (xmlHttp,UserId) {
-	if (this.UserID == null) {
-		xmlHttp.setRequestHeader("X-Emby-Authorization", "MediaBrowser Client=\"Samsung TV\", Device=\""+this.Device+"\", DeviceId=\""+this.DeviceID+"\", Version=\""+Main.getVersion()+"\", UserId=\""+UserId+"\"");
-	} else {
-		xmlHttp.setRequestHeader("X-Emby-Authorization", "MediaBrowser Client=\"Samsung TV\", Device=\""+this.Device+"\", DeviceId=\""+this.DeviceID+"\", Version=\""+Main.getVersion()+"\", UserId=\""+this.UserID+"\"");
-		if (this.AuthenticationToken != null) {
-			xmlHttp.setRequestHeader("X-MediaBrowser-Token", this.AuthenticationToken);		
-		}
+Server.setRequestHeaders = function (xmlHttp, UserId) {
+	// Build authorization header parts
+	var authParts = [
+		'Client="Samsung TV"',
+		'Device="' + this.Device + '"',
+		'DeviceId="' + this.DeviceID + '"',
+		'Version="' + Main.getVersion() + '"'
+	];
+
+	// Add token if authenticated (modern Jellyfin expects token in header)
+	if (this.AuthenticationToken != null) {
+		authParts.push('Token="' + this.AuthenticationToken + '"');
 	}
-	xmlHttp.setRequestHeader("Content-Type", 'application/json; charset=UTF-8');	
-	//xmlHttp.setRequestHeader("Accept-Charset", 'utf-8');
+
+	var authHeader = "MediaBrowser " + authParts.join(", ");
+
+	// Modern Jellyfin 10.11+: standard Authorization header
+	xmlHttp.setRequestHeader("Authorization", authHeader);
+
+	// Legacy fallback for older Jellyfin/Emby servers
+	xmlHttp.setRequestHeader("X-Emby-Authorization", authHeader);
+	if (this.AuthenticationToken != null) {
+		xmlHttp.setRequestHeader("X-MediaBrowser-Token", this.AuthenticationToken);
+	}
+
+	xmlHttp.setRequestHeader("Content-Type", 'application/json; charset=UTF-8');
 	return xmlHttp;
 }
 
 Server.getMoviesViewQueryPart = function() {
 	var ParentId = Server.getUserViewId("movies", "UserView");
-	
-	if (ParentId == null) { 
+
+	if (ParentId == null) {
 		return "";
 	} else {
 		return "&ParentId="+ParentId;
@@ -262,8 +277,8 @@ Server.getMoviesViewQueryPart = function() {
 
 Server.getTvViewQueryPart = function() {
 	var ParentId = Server.getUserViewId("tvshows", "UserView");
-	
-	if (ParentId == null) { 
+
+	if (ParentId == null) {
 		return "";
 	} else {
 		return "&ParentId="+ParentId;
@@ -297,7 +312,7 @@ Server.updateUserConfiguration = function(contentToPost) {
 		xmlHttp.open("POST", url , true); //must be true!
 		xmlHttp = this.setRequestHeaders(xmlHttp);
 		xmlHttp.send(contentToPost);
-	}	
+	}
 }
 
 //------------------------------------------------------------
@@ -309,7 +324,7 @@ Server.getSubtitles = function(url) {
 		xmlHttp.open("GET", url , false); //must be false
 		xmlHttp = this.setRequestHeaders(xmlHttp);
 		xmlHttp.send(null);
-		    
+
 		if (xmlHttp.status != 200) {
 			alert (xmlHttp.status);
 			return null;
@@ -345,7 +360,7 @@ Server.videoStopped = function(showId,MediaSourceID,ticks,PlayMethod,PlaySession
 		xmlHttp.open("POST", url , true); //must be true!
 		xmlHttp = this.setRequestHeaders(xmlHttp);
 		xmlHttp.send(contentToPost);
-	}	
+	}
 }
 
 Server.videoPaused = function(showId,MediaSourceID,ticks,PlayMethod,PlaySessionId) {
@@ -356,7 +371,7 @@ Server.videoPaused = function(showId,MediaSourceID,ticks,PlayMethod,PlaySessionI
 		xmlHttp.open("POST", url , true); //must be true!
 		xmlHttp = this.setRequestHeaders(xmlHttp);
 		xmlHttp.send(contentToPost);
-	}	
+	}
 }
 
 Server.videoTime = function(showId,MediaSourceID,ticks,PlayMethod,PlaySessionId) {
@@ -367,7 +382,7 @@ Server.videoTime = function(showId,MediaSourceID,ticks,PlayMethod,PlaySessionId)
 		xmlHttp.open("POST", url , true); //must be true!
 		xmlHttp = this.setRequestHeaders(xmlHttp);
 		xmlHttp.send(contentToPost);
-	}	
+	}
 }
 
 Server.stopHLSTranscode = function() {
@@ -377,7 +392,7 @@ Server.stopHLSTranscode = function() {
 		xmlHttp.open("POST", url , true); //must be true!
 		xmlHttp = this.setRequestHeaders(xmlHttp);
 		xmlHttp.send(null);
-	}	
+	}
 }
 
 //------------------------------------------------------------
@@ -499,63 +514,90 @@ Server.DELETE = function(url, item) {
 	}
 }
 //------------------------------------------------------------
-//      GuiIP Functions
+//      Connection Settings - Auto-detect base path
 //------------------------------------------------------------
-Server.testConnectionSettings = function (server,fromFile) {	
-	xmlHttp = new XMLHttpRequest();
-	if (xmlHttp) {
-		xmlHttp.open("GET", "http://" + server + "/jellyfin/System/Info/Public?format=json",false);
-		xmlHttp.setRequestHeader("Content-Type", 'application/json');
-		xmlHttp.onreadystatechange = function () {
-			GuiNotifications.setNotification("Connection Test","Network Status",true);
-			if (xmlHttp.readyState == 4) {
-		        if(xmlHttp.status === 200) {
-			    	if (fromFile == false) {
-			    		var json = JSON.parse(xmlHttp.responseText);
-			    		File.saveServerToFile(json.Id,json.ServerName,server); 
-			    	}
-			       	//Set Server.serverAddr!
-			       	Server.setServerAddr("http://" + server + "/jellyfin");
-			       	//Check Server Version
-			       	if (ServerVersion.checkServerVersion()) {
-			       		GuiUsers.start(true);
-			       	} else {
-			       		ServerVersion.start();
-			       	}
-		        } else if (xmlHttp.status === 0) {
-		        	GuiNotifications.setNotification("Your Jellyfin server is not responding.","Network Error "+xmlHttp.status,true);
-					Support.removeSplashScreen();
-			    	if (fromFile == true) {
-			    		setTimeout(function(){
-			    			GuiPage_Servers.start();
-			    		}, 3000);
-	
-			    	} else {
-			    		setTimeout(function(){
-			    			GuiPage_NewServer.start();
-			    		}, 3000);
-			    	}
-		        } else {
-		        	GuiNotifications.setNotification("Jellyfin server connection error.","Network Error "+xmlHttp.status,true);
-					Support.removeSplashScreen();
-			    	if (fromFile == true) {
-			    		setTimeout(function(){
-			    			GuiPage_Servers.start();
-			    		}, 3000);
-	
-			    	} else {
-			    		setTimeout(function(){
-			    			GuiPage_NewServer.start();
-			    		}, 3000);
-			    	}
-		        }
+// Base paths to try: root, /jellyfin (legacy), /emby (legacy)
+Server._basePaths = ["", "/jellyfin", "/emby"];
+
+Server.testConnectionSettings = function (server, fromFile) {
+	Server._tryConnectWithPath(server, 0, fromFile);
+};
+
+Server._tryConnectWithPath = function (server, pathIndex, fromFile) {
+	if (pathIndex >= Server._basePaths.length) {
+		// All paths exhausted - connection failed
+		GuiNotifications.setNotification("Jellyfin server not found at any known path.", "Network Error", true);
+		Support.removeSplashScreen();
+		setTimeout(function() {
+			if (fromFile) {
+				GuiPage_Servers.start();
+			} else {
+				GuiPage_NewServer.start();
 			}
-	    };
-		xmlHttp.send(null);
-	} else {
-	    alert("Failed to create XHR");
+		}, 3000);
+		return;
 	}
-}
+
+	var basePath = Server._basePaths[pathIndex];
+	var testUrl = "http://" + server + basePath + "/System/Info/Public?format=json";
+
+	var xmlHttp = new XMLHttpRequest();
+	xmlHttp.open("GET", testUrl, false);
+	xmlHttp.setRequestHeader("Content-Type", "application/json");
+
+	try {
+		xmlHttp.send(null);
+	} catch (e) {
+		// Network error - try next path
+		Server._tryConnectWithPath(server, pathIndex + 1, fromFile);
+		return;
+	}
+
+	if (xmlHttp.status === 200) {
+		// Success!
+		GuiNotifications.setNotification("Connection Test", "Network Status", true);
+
+		if (!fromFile) {
+			var json = JSON.parse(xmlHttp.responseText);
+			File.saveServerToFile(json.Id, json.ServerName, server);
+		}
+
+		// Set Server.serverAddr with detected base path
+		Server.setServerAddr("http://" + server + basePath);
+
+		// Check Server Version
+		if (ServerVersion.checkServerVersion()) {
+			GuiUsers.start(true);
+		} else {
+			ServerVersion.start();
+		}
+	} else if (xmlHttp.status === 404) {
+		// Path not found - try next
+		Server._tryConnectWithPath(server, pathIndex + 1, fromFile);
+	} else if (xmlHttp.status === 0) {
+		// No network response
+		GuiNotifications.setNotification("Your Jellyfin server is not responding.", "Network Error " + xmlHttp.status, true);
+		Support.removeSplashScreen();
+		setTimeout(function() {
+			if (fromFile) {
+				GuiPage_Servers.start();
+			} else {
+				GuiPage_NewServer.start();
+			}
+		}, 3000);
+	} else {
+		// Other error (500, etc.)
+		GuiNotifications.setNotification("Jellyfin server connection error.", "Network Error " + xmlHttp.status, true);
+		Support.removeSplashScreen();
+		setTimeout(function() {
+			if (fromFile) {
+				GuiPage_Servers.start();
+			} else {
+				GuiPage_NewServer.start();
+			}
+		}, 3000);
+	}
+};
 
 //------------------------------------------------------------
 //      GuiUsers Functions
@@ -564,13 +606,13 @@ Server.testConnectionSettings = function (server,fromFile) {
 Server.Authenticate = function(UserId, UserName, Password) {
 	var url = Server.getServerAddr() + "/Users/AuthenticateByName?format=json";
     var params =  JSON.stringify({"Username":UserName,"Pw":Password});
-    
-    var xmlHttp = new XMLHttpRequest();	
+
+    var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "POST", url , false ); //Authenticate must be false - need response before continuing!
     xmlHttp = this.setRequestHeaders(xmlHttp);
-        
+
     xmlHttp.send(params);
-    
+
     if (xmlHttp.status != 200) {
     	return false;
     } else {
@@ -590,8 +632,8 @@ Server.Logout = function() {
 		xmlHttp.open("POST", url , true); //must be true!
 		xmlHttp = this.setRequestHeaders(xmlHttp);
 		xmlHttp.send(null);
-	}	
-	
+	}
+
 	//Close down any running items
 	GuiImagePlayer_Screensaver.kill();
 	GuiImagePlayer.kill();
@@ -609,7 +651,7 @@ Server.getContent = function(url) {
 		xmlHttp.open("GET", url , false); //must be false
 		xmlHttp = this.setRequestHeaders(xmlHttp);
 		xmlHttp.send(null);
-		    
+
 		if (xmlHttp.status != 200) {
 			FileLog.write("Server Error: The HTTP status returned by the server was "+xmlHttp.status);
 			FileLog.write(url);
