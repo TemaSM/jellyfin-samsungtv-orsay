@@ -343,31 +343,37 @@ input[type="password"]
 }
 
 /*----------------------------------------------------------------------------------------------*/
+/* ===== NOTIFICATIONS - Modern Jellyfin Style ===== */
 
 .notification {
-	position:absolute;
-	top:390px;
-	left:710px;
-	padding:20px;
-	height:300px;
-	width:500px;
-	color:white;
-	z-index:9999;
-	background-color:#303030;
-	border-radius: 25px;
-}
-
-.notificationText {
-	position:absolute;
-	top:20px;
-	left:20px;
-	height:260px;
-	width:456px;
-	color:white; 
+	position: absolute;
+	bottom: 60px;
+	right: 60px;
+	min-width: 320px;
+	max-width: 480px;
+	padding: 20px 24px;
+	color: white;
+	z-index: 9999;
+	background: linear-gradient(135deg, rgba(30, 30, 40, 0.95) 0%, rgba(20, 20, 30, 0.98) 100%);
+	border-radius: 12px;
+	border-left: 4px solid #AA5CC3;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 2px 8px rgba(170, 92, 195, 0.2);
+	overflow: hidden;
 }
 
 .notificationTitle {
-	font-size:1.5em;
+	font-size: 0.85em;
+	font-weight: 600;
+	color: #AA5CC3;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	margin-bottom: 8px;
+}
+
+.notificationMessage {
+	font-size: 1.1em;
+	line-height: 1.4;
+	color: rgba(255, 255, 255, 0.95);
 }
 
 .counter {
