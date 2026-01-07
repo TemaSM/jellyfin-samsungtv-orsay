@@ -187,7 +187,7 @@ input[type="password"]
 	height: 65px;
 	background-position: center; 
 	background-repeat: no-repeat;
-	background-image: url('images/menu/folder-23x19.png');
+	background-image: url('images/menu/Folder-46x37.png');
 }
 
 .menu-version {
@@ -1603,7 +1603,6 @@ input[type="password"]
 	line-height:50px;
 	text-align:center;
 
-	background-image:url('images/itemCount.png');
 	background-repeat: no-repeat;
     background-position:center;
 }
