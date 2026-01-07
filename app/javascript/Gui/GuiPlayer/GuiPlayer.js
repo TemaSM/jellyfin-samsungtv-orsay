@@ -2,7 +2,7 @@
 //
 //Samsung Player accepts seconds
 //Samsung Current time works in seconds * 1000
-//Emby works in seconds * 10000000
+//Jellyfin works in seconds * 10000000
 
 var GuiPlayer = {	
 		plugin : null,

@@ -88,7 +88,7 @@ Main.onLoad = function()
 	//Setup Logging
 	FileLog.loadFile(false); // doesn't return contents, done to ensure file exists
 	FileLog.write("---------------------------------------------------------------------",true);
-	FileLog.write("Emby Application Started");
+	FileLog.write("Jellyfin Application Started");
 	
 	if (Main.isImageCaching()) {
 		var fileSystemObj = new FileSystem();
@@ -211,7 +211,7 @@ Main.onLoad = function()
 	    	}
 	    } else if (fileJson.Servers.length == 1) {
 	    	//If 1 server auto login with that
-	    	FileLog.write("Emby server name found in settings. Auto-connecting.");
+			FileLog.write("Jellyfin server name found in settings. Auto-connecting.");
 	    	File.setServerEntry(0);
 	    	Server.testConnectionSettings(fileJson.Servers[0].Path,true);
 	    } else {
