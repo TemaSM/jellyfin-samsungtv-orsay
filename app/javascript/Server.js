@@ -555,10 +555,14 @@ Server._tryConnectWithPath = function (server, pathIndex, fromFile) {
 
 	if (xmlHttp.status === 200) {
 		// Success!
-		GuiNotifications.setNotification("Connection Test", "Network Status", true);
+		var json = JSON.parse(xmlHttp.responseText);
+		GuiNotifications.setNotification(
+			'Connected to "' + json.ServerName + '"',
+			json.ProductName + " v" + json.Version,
+			true
+		);
 
 		if (!fromFile) {
-			var json = JSON.parse(xmlHttp.responseText);
 			File.saveServerToFile(json.Id, json.ServerName, server);
 		}
 
