@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit",
+      "Read",
+      "Write",
+      "Create",
+      "Update",
+      "Glob",
+      "Grep",
+      "Bash",
+      "WebFetch",
+      "WebSearch",
+      "SlashCommand(/ultra-think:*)",
+      "Skill(claude-mem:*)",
+      "mcp__sequential-thinking__*",
+      "mcp__browsermcp__*",
+      "mcp__chrome-devtools__*",
+      "mcp__plugin_claude-mem_claude-mem-search__*",
+      "mcp__plugin_claude-mem_mem-search__*",
+      "mcp__plugin_playwright_playwright__*",
+      "mcp__plugin_context7_context7__*",
+      "Skill(directory-deep-dive)"
+    ],
+    "deny": [
+      "Bash(git push origin main:*)",
+      "Bash(git push origin master:*)",
+      "Bash(rm -rf:*)"
+    ],
+    "ask": []
+  }
+}
